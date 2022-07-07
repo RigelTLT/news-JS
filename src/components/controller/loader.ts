@@ -1,12 +1,17 @@
+interface IOptions {
+    [key: string]: string;
+}
 class Loader {
-    constructor(baseLink, options) {
-        this.baseLink = baseLink;
+    baseLink: string;
+    options: IOptions;
+    constructor(baseLink: string, options: IOptions) {
+        this.baseLink= baseLink;
         this.options = options;
         this.errorHandler.bind(this);
     }
 
     getResp(
-        { endpoint, options = {} },
+        { endpoint, options = {} } : {endpoint: string, options?: IOptions},
         callback = () => {
             console.error('No callback for GET response');
         }
@@ -30,7 +35,7 @@ class Loader {
         return res;
     }
 
-    makeUrl(options, endpoint) {
+    makeUrl(options : IOptions, endpoint: string) {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
@@ -41,7 +46,7 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: <T>(data: Array<T>) => void, options: Map<string, string> = new Map()) {
+    load(method: string, endpoint: string, callback: <T>(data: Array<T>) => void, options: IOptions) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())
