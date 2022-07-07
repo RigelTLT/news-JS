@@ -1,6 +1,6 @@
 export type articlesData = {
   source: {
-      id: string;
+      readonly id: string;
       name: string;
   };
   author: string;
@@ -17,7 +17,7 @@ export interface INewItems{
   description: string;
   publishedAt: string;
   source: {
-      id: string;
+      readonly id: string;
       name: string;
       description: string;
       language: string;

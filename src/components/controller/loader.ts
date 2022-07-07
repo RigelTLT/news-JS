@@ -1,14 +1,14 @@
 import {IOptions, Callback} from "../../types/index"
 class Loader {
-    baseLink: string;
-    options: IOptions;
+    private baseLink: string;
+    private options: IOptions;
     constructor(baseLink: string, options: IOptions) {
         this.baseLink= baseLink;
         this.options = options;
         this.errorHandler.bind(this);
     }
 
-    getResp(
+    public getResp(
         { endpoint, options = {} } : {endpoint: string, options?: IOptions},
         callback = () => {
             console.error('No callback for GET response');
@@ -17,7 +17,7 @@ class Loader {
         this.load('GET', endpoint, callback, options);
     }
 
-    errorHandler(res: Response) {
+    protected errorHandler(res: Response) {
         if (!res.ok) {
             enum ResStatus {
                 One = 401,
@@ -33,7 +33,7 @@ class Loader {
         return res;
     }
 
-    makeUrl(options : IOptions, endpoint: string) {
+    public makeUrl(options : IOptions, endpoint: string) {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
@@ -44,7 +44,7 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: Callback<void>, options: IOptions) {
+    public load(method: string, endpoint: string, callback: Callback<void>, options: IOptions) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())
