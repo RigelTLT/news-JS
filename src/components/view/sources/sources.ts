@@ -1,10 +1,10 @@
 import './sources.css';
 
-export interface SourceRs{
+export interface ISourceRs{
     status: string;
-    source: Array<SourceItems>;
+    source: Array<ISourceItems>;
 }
-export interface SourceItems{
+export interface ISourceItems{
     id: string;
     name: string;
     description: string;
@@ -14,7 +14,7 @@ export interface SourceItems{
     country: string;
 }
 class Sources {
-    draw(data : Array<SourceItems>){
+    draw(data : Array<ISourceItems>){
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector('#sourceItemTemp') as HTMLTemplateElement;
 
@@ -27,7 +27,7 @@ class Sources {
             fragment.append(sourceClone);
         });
 
-        (document.querySelector('.sources')  as HTMLTemplateElement).append(fragment);
+        (document.querySelector('.sources') as HTMLTemplateElement).append(fragment);
     }
 }
 

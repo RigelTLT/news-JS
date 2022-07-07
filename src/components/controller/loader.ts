@@ -2,6 +2,7 @@ class Loader {
     constructor(baseLink, options) {
         this.baseLink = baseLink;
         this.options = options;
+        this.errorHandler.bind(this);
     }
 
     getResp(
@@ -13,9 +14,15 @@ class Loader {
         this.load('GET', endpoint, callback, options);
     }
 
-    errorHandler(res) {
+    errorHandler(res: Response) {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            enum ResStatus {
+                One = 401,
+                Two,
+                Three,
+                Thou
+           }
+            if (res.status === ResStatus.One || res.status === ResStatus.Thou)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
@@ -34,10 +41,10 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method, endpoint, callback, options = {}) {
+    load(method: string, endpoint: string, callback: <T>(data: Array<T>) => void, options: Map<string, string> = new Map()) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
-            .then((res) => res.json())
+            .then((res: Response) => res.json())
             .then((data) => callback(data))
             .catch((err) => console.error(err));
     }
