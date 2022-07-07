@@ -1,6 +1,4 @@
-interface IOptions {
-    [key: string]: string;
-}
+import {IOptions, Callback} from "../../types/index"
 class Loader {
     baseLink: string;
     options: IOptions;
@@ -46,7 +44,7 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: <T>(data: Array<T>) => void, options: IOptions) {
+    load(method: string, endpoint: string, callback: Callback<void>, options: IOptions) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())

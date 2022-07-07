@@ -43,3 +43,7 @@ export interface ISourceItems{
   status: string;
   sources: sourceData[];
 }
+export interface IOptions {
+  [key: string]: string;
+}
+export type Callback <T> = (param: T) => void;
