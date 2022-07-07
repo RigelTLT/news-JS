@@ -14,11 +14,6 @@ export interface INewItems{
     url: string;
     urlToImage: string;
 }
-export interface INewList {
-    status: string;
-    totalResults: number;
-    articles: INewItems[];
-}
 class News {
     draw(data: INewItems[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
