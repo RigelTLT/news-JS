@@ -1,21 +1,7 @@
 import './news.css';
-
-export interface INewRs{
-    id: string;
-    name: string;
-}
-export interface INewItems{
-    author: string | null;
-    content: string;
-    description: string;
-    publishedAt: string;
-    source: INewRs;
-    title: string;
-    url: string;
-    urlToImage: string;
-}
+import {articlesData} from '../../../types/index';
 class News {
-    draw(data: INewItems[]) {
+    draw(data: articlesData[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();

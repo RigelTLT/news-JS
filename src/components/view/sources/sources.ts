@@ -1,20 +1,8 @@
 import './sources.css';
+import {sourceData} from '../../../types/index';
 
-export interface ISourceRs{
-    status: string;
-    source: Array<ISourceItems>;
-}
-export interface ISourceItems{
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-}
 class Sources {
-    draw(data : Array<ISourceItems>){
+    draw(data : sourceData[]){
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector('#sourceItemTemp') as HTMLTemplateElement;
 
