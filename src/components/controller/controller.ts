@@ -1,5 +1,5 @@
 import AppLoader from './appLoader';
-import {Callback, INewItems, ISourceItems} from '../../types/index'
+import { Callback, INewItems, ISourceItems } from '../../types/index';
 class AppController extends AppLoader {
     public getSources(callback: Callback<ISourceItems | void>) {
         super.getResp(
@@ -17,19 +17,20 @@ class AppController extends AppLoader {
         while (target !== newsContainer) {
             if (target.classList.contains('source__item')) {
                 const sourceId = target.getAttribute('data-source-id');
-                if( typeof sourceId === 'string') {
-                if (newsContainer.getAttribute('data-source') !== sourceId) {
-                    newsContainer.setAttribute('data-source', sourceId);
-                    super.getResp(
-                        {
-                            endpoint: 'everything',
-                            options: {
-                                sources: sourceId,
+                if (typeof sourceId === 'string') {
+                    if (newsContainer.getAttribute('data-source') !== sourceId) {
+                        newsContainer.setAttribute('data-source', sourceId);
+                        super.getResp(
+                            {
+                                endpoint: 'everything',
+                                options: {
+                                    sources: sourceId,
+                                },
                             },
-                        },
-                        callback
-                    );
-                }}
+                            callback
+                        );
+                    }
+                }
                 return;
             }
             target = target.parentNode as HTMLTemplateElement;

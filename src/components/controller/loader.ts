@@ -1,15 +1,15 @@
-import {IOptions, Callback} from "../../types/index"
+import { IOptions, Callback } from '../../types/index';
 class Loader {
     private baseLink: string;
     private options: IOptions;
     constructor(baseLink: string, options: IOptions) {
-        this.baseLink= baseLink;
+        this.baseLink = baseLink;
         this.options = options;
         this.errorHandler.bind(this);
     }
 
     public getResp(
-        { endpoint, options = {} } : {endpoint: string, options?: IOptions},
+        { endpoint, options = {} }: { endpoint: string; options?: IOptions },
         callback = () => {
             console.error('No callback for GET response');
         }
@@ -23,8 +23,8 @@ class Loader {
                 One = 401,
                 Two,
                 Three,
-                Thou
-           }
+                Thou,
+            }
             if (res.status === ResStatus.One || res.status === ResStatus.Thou)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
@@ -33,7 +33,7 @@ class Loader {
         return res;
     }
 
-    public makeUrl(options : IOptions, endpoint: string) {
+    public makeUrl(options: IOptions, endpoint: string) {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 

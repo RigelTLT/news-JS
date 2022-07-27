@@ -1,5 +1,5 @@
 import './news.css';
-import {articlesData} from '../../../types/index';
+import { articlesData } from '../../../types/index';
 class News {
     public draw(data: articlesData[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
@@ -15,7 +15,8 @@ class News {
             (newsClone.querySelector('.news__meta-photo') as HTMLTemplateElement).style.backgroundImage = `url(${
                 item.urlToImage || 'img/news_placeholder.jpg'
             })`;
-            (newsClone.querySelector('.news__meta-author') as HTMLTemplateElement).textContent = item.author || item.source.name;
+            (newsClone.querySelector('.news__meta-author') as HTMLTemplateElement).textContent =
+                item.author || item.source.name;
             (newsClone.querySelector('.news__meta-date') as HTMLTemplateElement).textContent = item.publishedAt
                 .slice(0, 10)
                 .split('-')
@@ -23,8 +24,10 @@ class News {
                 .join('-');
 
             (newsClone.querySelector('.news__description-title') as HTMLTemplateElement).textContent = item.title;
-            (newsClone.querySelector('.news__description-source') as HTMLTemplateElement).textContent = item.source.name;
-            (newsClone.querySelector('.news__description-content') as HTMLTemplateElement).textContent = item.description;
+            (newsClone.querySelector('.news__description-source') as HTMLTemplateElement).textContent =
+                item.source.name;
+            (newsClone.querySelector('.news__description-content') as HTMLTemplateElement).textContent =
+                item.description;
             (newsClone.querySelector('.news__read-more a') as HTMLTemplateElement).setAttribute('href', item.url);
 
             fragment.append(newsClone);
