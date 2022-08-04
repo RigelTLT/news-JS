@@ -1,11 +1,15 @@
+import { IOptions, Callback } from '../../types/index';
 class Loader {
-    constructor(baseLink, options) {
+    private baseLink: string;
+    private options: IOptions;
+    constructor(baseLink: string, options: IOptions) {
         this.baseLink = baseLink;
         this.options = options;
+        this.errorHandler.bind(this);
     }
 
-    getResp(
-        { endpoint, options = {} },
+    public getResp(
+        { endpoint, options = {} }: { endpoint: string; options?: IOptions },
         callback = () => {
             console.error('No callback for GET response');
         }
@@ -13,9 +17,15 @@ class Loader {
         this.load('GET', endpoint, callback, options);
     }
 
-    errorHandler(res) {
+    protected errorHandler(res: Response) {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            enum ResStatus {
+                One = 401,
+                Two,
+                Three,
+                Thou,
+            }
+            if (res.status === ResStatus.One || res.status === ResStatus.Thou)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
@@ -23,7 +33,7 @@ class Loader {
         return res;
     }
 
-    makeUrl(options, endpoint) {
+    public makeUrl(options: IOptions, endpoint: string) {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
@@ -34,10 +44,10 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method, endpoint, callback, options = {}) {
+    public load(method: string, endpoint: string, callback: Callback<void>, options: IOptions) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
-            .then((res) => res.json())
+            .then((res: Response) => res.json())
             .then((data) => callback(data))
             .catch((err) => console.error(err));
     }
